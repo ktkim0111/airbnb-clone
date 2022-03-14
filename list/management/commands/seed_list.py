@@ -1,13 +1,12 @@
-from distutils.command.clean import clean
 import random
 from django.core.management.base import BaseCommand
 from django.contrib.admin.utils import flatten
 from django_seed import Seed
-from lists import models as list_models
+from list import models as list_models
 from users import models as user_models
 from rooms import models as room_models
 
-NAME = "lists"
+NAME = "list"
 
 
 class Command(BaseCommand):
