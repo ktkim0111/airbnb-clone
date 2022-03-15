@@ -26,7 +26,7 @@ SECRET_KEY = "vsv)dvb-l3a_#8^j8&b%l*hd(kc0(0rk#t&1tr%w*(1st+=3t8"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = "*"
 
 
 # Application definition
