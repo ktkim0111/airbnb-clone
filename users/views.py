@@ -1,34 +1,27 @@
 from django.views import View
-from django.shortcuts import render
+from django.views.generic import FormView
+from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth import authenticate, login, logout
 from . import forms
 
 
-class LoginView(View):
-    # 페이지에 접근했을 때
-    def get(self, request):
-        form = forms.LoginForm(
-            initial={
-                "email": "itn@las.com",
-            }
-        )
-        return render(
-            request,
-            "users/login.html",
-            {
-                "form": form,
-            },
-        )
+class LoginView(FormView):
 
-    # Login 요청했을 때
-    # clean - dict형태로 정리해 줌 - clean_email 등의 함수의 return 값으로
-    def post(self, request):
-        form = forms.LoginForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-        return render(
-            request,
-            "users/login.html",
-            {
-                "form": form,
-            },
-        )
+    template_name = "users/login.html"
+    form_class = forms.LoginForm
+    success_url = reverse_lazy("core:home")
+    initial = {"email": "itnicolasme@gmail.com"}
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=email, password=password)
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)
+
+
+def log_out(request):
+    logout(request)
+    return redirect(reverse("core:home"))
