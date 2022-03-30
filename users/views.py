@@ -1,9 +1,8 @@
 import os
 import requests
-from django.views import View
 from django.views.generic import FormView
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from . import forms, models
 
@@ -140,7 +139,8 @@ def kakao_login(request):
     REST_API_KEY = os.environ.get("K_KEY")
     REDIRECT_URI = "http://127.0.0.1:8000/users/login/kakao/callback"
     return redirect(
-        f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}"
+        "https://kauth.kakao.com/oauth/authorize?"
+        + f"response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}"
     )
 
 
